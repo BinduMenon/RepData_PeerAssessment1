@@ -35,7 +35,6 @@ head(clean_activity_data)
 
 ## Analysis of the data
 ### What is mean total number of steps taken per day?
-
 Steps followed:  
  1. Calculate the total number of steps taken per day  
  2. Make a histogram of the total number of steps taken each day  
@@ -56,10 +55,29 @@ median(Agg_Step$steps)
 ```
 
 
-## What is the average daily activity pattern?
+### What is the average daily activity pattern?
+Steps followed: 
+ 1. Make a time series plot of the 5-minute interval and the average number of steps taken, averaged across all days 
+ 2. Find the row data which has the maximum average number of steps in an interval
+ 3. Get the interval for the maximun number of steps
 
+```{r, echo=TRUE}
+# Aggregate steps in a 5 min intervals 
+Agg_interval <- aggregate(steps ~ interval, clean_activity_data, mean)
 
+# Plot the times series graph 
+plot(Agg_interval$interval, Agg_interval$steps, type = 'l', col = 'green',
+     main = "Average Number of steps across all days",
+     xlab = "5 min intervals",
+     ylab = "Avg number of steps")
 
+#Row data which has the maximum average number of steps in an interval
+max_steps <- which.max(Agg_interval$steps)
+
+#Get the interval for the maximun number of steps
+Agg_interval[max_steps, ]
+
+```
 ## Imputing missing values
 
 
