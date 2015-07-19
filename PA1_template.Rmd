@@ -45,7 +45,8 @@ Steps followed:
 Agg_Step <- aggregate(steps ~ date, clean_activity_data, sum)
 
 # Plot the histogram 
-hist(Agg_Step$steps, main ="Total Number of steps taken per day", xlab = "Steps/Day", col = "blue")
+hist(Agg_Step$steps, main ="Total Number of steps taken per day", 
+     xlab = "Steps/Day", col = "blue")
 
 #Get the mean total number of steps per day
 mean(Agg_Step$steps)
@@ -78,8 +79,37 @@ max_steps <- which.max(Agg_interval$steps)
 Agg_interval[max_steps, ]
 
 ```
-## Imputing missing values
+### Imputing missing values
+Steps followed: 
+ 1. Calculate and report the total number of missing values in the dataset
+ 2. Devise a strategy for filling in all of the missing values in the dataset. 
+ 3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+ 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day.
 
+```{r, echo=TRUE}
+# Get the total number of NA in the dataset
+NA_rows <- sum(is.na(activity_data))
 
+#Replace NA by the mean for that 5 min interval
+rep_na <- aggregate(steps ~ interval, clean_activity_data, mean)
 
+#Perform imputation using for loop using the value from rep_na
+for (i in 1:nrow(activity_data)) {
+      if(is.na(activity_data$steps[i])){
+            new_interval <- activity_data$interval[i]
+            row <- which(rep_na$interval == new_interval)
+            new_steps <- rep_na$steps[row]
+            activity_data$steps[i] <- new_steps
+      }
+}
+
+#new aggregate 
+activity_data_imputed <- aggregate(steps ~ date, activity_data, sum)
+
+#new histogram
+hist(activity_data_imputed$steps, 
+     main ="Total Number of steps taken per day (Imputed Data", 
+     xlab = "Steps/Day", col = "red")
+
+```
 ## Are there differences in activity patterns between weekdays and weekends?
