@@ -48,6 +48,11 @@ Agg_Step <- aggregate(steps ~ date, clean_activity_data, sum)
 # Plot the histogram 
 hist(Agg_Step$steps, main ="Total Number of steps taken per day", xlab = "Steps/Day", col = "blue")
 
+#Get the mean total number of steps per day
+mean(Agg_Step$steps)
+
+#Get the median total number of steps per day
+median(Agg_Step$steps)
 ```
 
 
