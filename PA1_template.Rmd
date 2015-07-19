@@ -108,8 +108,20 @@ activity_data_imputed <- aggregate(steps ~ date, activity_data, sum)
 
 #new histogram
 hist(activity_data_imputed$steps, 
-     main ="Total Number of steps taken per day (Imputed Data", 
+     main ="Total Number of steps taken per day (Imputed Data)", 
      xlab = "Steps/Day", col = "red")
 
+#get mean of the imputed data
+mean(activity_data_imputed$steps)
+
+#get median of the imputed data
+median(activity_data_imputed$steps)
+
 ```
+
+#### *Analysis from the raw data vs the imputed data *  
+      1. Mean - Since we used the mean to replace the NA, we see that the mean of the imputed data remains the same as the mean of the original data  
+      2. Meadian - We see a small change in the median values of the imputed data compared to the median of the orginal data.
+      
+
 ## Are there differences in activity patterns between weekdays and weekends?
